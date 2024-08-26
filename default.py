@@ -5,7 +5,7 @@ import stockTools as tools
 def load_page():
     st.markdown(
         """
-            Welcome to :green[FinRisk]! Explore this app to assess and simulate 
+            Welcome to :green[GuardianSIM]! Explore this app to assess and simulate 
             your investment portfolio's risk effortlessly! :green[Risk management] is like 
             :blue[wearing a helmet while riding a bike]—it shields your money during investments. 
             It's a strategy set to understand uncertainties in stocks or bonds.
@@ -15,7 +15,7 @@ def load_page():
             keeping your game plan robust. Don't worry, I'll explain these concepts in a bit.
             
             Build your :green[portfolio] on the sidebar; guidance is provided! Contact me at 
-            [DelinM](https://www.linkedin.com/in/raymond-mu/)
+            [MeetTheData](https://meetthedata.vercel.app/)
             """
     )
 
