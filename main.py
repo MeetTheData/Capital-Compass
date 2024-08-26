@@ -6,8 +6,8 @@ import portfolio
 import model
 
 st.set_page_config(
-    page_title="Capital Compass",
-    page_icon="🧭",
+    page_title="GuardianSIM",
+    page_icon="🛡️",
     layout="wide"
 )
 
