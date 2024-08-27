@@ -71,7 +71,7 @@ def preview_stock(
             st.error("Ticker symbol is not available in session state.")
             return
 
-        stock_data = yf.download(ticker, start=start_date, end=dt.datetime.now())
+        stock_data = yfinance.download(ticker, start=start_date, end=dt.datetime.now())
         
         if stock_data.empty:
             st.error("No data found for the given ticker and date range.")
