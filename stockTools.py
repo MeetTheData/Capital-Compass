@@ -64,42 +64,30 @@ def preview_stock(
         session_state_name: str,
         start_date: datetime.datetime
 ) -> None:
-    try:
-        # Check if the session state has the required ticker symbol
-        ticker = st.session_state.get(session_state_name)
-        if not ticker:
-            st.error("Ticker symbol is not available in session state.")
-            return
+    stock_data = yfinance.download(st.session_state[session_state_name],
+                                   start=start_date,
+                                   end=dt.datetime.now())
+    stock_data = stock_data[['Close']]
 
-        stock_data = yfinance.download(ticker, start=start_date, end=dt.datetime.now())
-        
-        if stock_data.empty:
-            st.error("No data found for the given ticker and date range.")
-            return
-        
-        stock_data = stock_data[['Close']]
-    
-        color = None
-    
-        # get price difference of close
-        diff_price = stock_data.iloc[-1]['Close'] - stock_data.iloc[0]['Close']
-        if diff_price > 0.0:
-            color = '#00fa119e'
-        elif diff_price < 0.0:
-            color = '#fa00009e'
-    
-        # change index form 0 to end
-        stock_data['day(s) since buy'] = range(0, len(stock_data))
-    
-        create_metric_card(label=st.session_state[session_state_name],
-                           value=f"{stock_data.iloc[-1]['Close']: .2f}",
-                           delta=f"{diff_price: .2f}")
-    
-        st.area_chart(stock_data, use_container_width=True,
-                      height=250, width=250, color=color, x='day(s) since buy')
+    color = None
 
-    except Exception as e:
-        st.error(f"An error occurred while loading stock data: {e}")
+    # get price difference of close
+    diff_price = stock_data.iloc[-1]['Close'] - stock_data.iloc[0]['Close']
+    if diff_price > 0.0:
+        color = '#00fa119e'
+    elif diff_price < 0.0:
+        color = '#fa00009e'
+
+    # change index form 0 to end
+    stock_data['day(s) since buy'] = range(0, len(stock_data))
+
+    create_metric_card(label=st.session_state[session_state_name],
+                       value=f"{stock_data.iloc[-1]['Close']: .2f}",
+                       delta=f"{diff_price: .2f}")
+
+    st.area_chart(stock_data, use_container_width=True,
+                  height=250, width=250, color=color, x='day(s) since buy')
+    
         
 def format_currency(number: float) -> str:
     formatted_number = "${:,.2f}".format(number)
